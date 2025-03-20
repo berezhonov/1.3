@@ -3,8 +3,10 @@ package jm.task.core.jdbc.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Entity;
 import java.util.Objects;
 
+@Entity
 @Table
 public class User {
     @Id
