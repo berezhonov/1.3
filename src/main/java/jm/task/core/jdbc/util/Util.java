@@ -16,7 +16,7 @@ public class Util {
     private static final String PASSWORD = "root";
 
     // Hibernate
-    private static final SessionFactory sf = buildSF();
+    private static final SessionFactory sessionFactory = buildSessionFactory();
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -28,7 +28,7 @@ public class Util {
         return connection;
     }
 
-    private static SessionFactory buildSF() {
+    private static SessionFactory buildSessionFactory() {
         try {
             Configuration conf = new Configuration();
 
@@ -42,10 +42,10 @@ public class Util {
 
             conf.addAnnotatedClass(jm.task.core.jdbc.model.User.class);
 
-            ServiceRegistry serviceR = new StandardServiceRegistryBuilder()
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(conf.getProperties()).build();
 
-            return conf.buildSessionFactory(serviceR);
+            return conf.buildSessionFactory(serviceRegistry);
 
         } catch (Throwable e) {
             System.err.println("Initial SessionFactory creation failed." + e);
@@ -53,11 +53,11 @@ public class Util {
         }
     }
 
-    public static SessionFactory getSF() {
-        return sf;
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
     public static void shutdown() {
-        getSF().close();
+        getSessionFactory().close();
     }
 }
